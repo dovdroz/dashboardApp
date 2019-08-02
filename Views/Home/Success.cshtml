@@ -1,0 +1,171 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Tickets</title>
+</head>
+
+
+<body style="background-color:#ccefff;">
+
+    @if ((ViewBag.StartDate != null) && (ViewBag.EndDate == null))
+    {
+
+        <h3>Tickets from @ViewBag.StartDate.ToShortDateString() to Present</h3>
+    }
+    else if ((ViewBag.EndDate != null) && (ViewBag.StartDate == null))
+    {
+        <h3>Tickets up to @ViewBag.EndDate.ToShortDateString()</h3>
+    }
+    else if ((ViewBag.EndDate != null) && (ViewBag.StartDate != null))
+    {
+        <h3>Tickets from @ViewBag.StartDate.ToShortDateString() to @ViewBag.EndDate.ToShortDateString()</h3>
+    }
+    else
+    {
+        <h3>Tickets up to the present</h3>
+    }
+
+
+    <details>
+        <summary>
+            <table cellpadding="2" cellspacing="2" border="1" style="background-color:aliceblue">
+                <tr>
+                    <td>Created Tickets</td>
+                </tr>
+                <tr>
+                    <td>@ViewBag.CreatedCount</td>
+                </tr>
+            </table>
+        </summary>
+        <table cellpadding="2" cellspacing="2" border="1" style="background-color:white">
+            <tr>
+                <td>Key</td>
+                <td>Summary</td>
+                <td>Status</td>
+                <td>Date Created</td>
+            </tr>
+            @foreach (var p in ViewBag.ListData)
+            {
+                if (((p.Status == "Open") || (p.Status == "In Progress") || (p.Status == "To Do")) && (p.Created.AddDays(14) > System.DateTime.Now))
+                {
+                    <tr>
+                        <td><a href="@(p.KeyLink)">@p.Key</a></td>
+                        <td>@p.Summary</td>
+                        <td>@p.Status</td>
+                        <td>@p.Created</td>
+                    </tr>
+                }
+            }
+        </table>
+    </details>
+
+
+
+    <details>
+        <summary>
+            <table cellpadding="2" cellspacing="2" border="1" style="background-color:aliceblue">
+                <tr>
+                    <td>Resolved Tickets</td>
+                </tr>
+                <tr>
+                    <td>@ViewBag.ResolvedCount</td>
+                </tr>
+            </table>
+        </summary>
+        <table cellpadding="2" cellspacing="2" border="1" style="background-color:white">
+            <tr>
+                <td>Key</td>
+                <td>Summary</td>
+                <td>Status</td>
+                <td>Date Resolved</td>
+            </tr>
+            @foreach (var p in ViewBag.ListData)
+            {
+                if (p.Status == "Resolved")
+                {
+                    <tr>
+                        <td><a href="@(p.KeyLink)">@p.Key</a></td>
+                        <td>@p.Summary</td>
+                        <td>@p.Status</td>
+                        <td>@p.Resolved</td>
+                    </tr>
+                }
+            }
+        </table>
+    </details>
+
+
+
+    <details>
+        <summary>
+            <table cellpadding="2" cellspacing="2" border="1" style="background-color:aliceblue">
+                <tr>
+                    <td>SLA Breached Tickets</td>
+                </tr>
+                <tr>
+                    <td>@ViewBag.SLACount</td>
+                </tr>
+            </table>
+        </summary>
+        <table cellpadding="2" cellspacing="2" border="1" style="background-color:white">
+            <tr>
+                <td>Key</td>
+                <td>Summary</td>
+                <td>Status</td>
+                <td>Date Created</td>
+            </tr>
+            @foreach (var p in ViewBag.ListData)
+            {
+                if (((p.Status == "Open") || (p.Status == "In Progress") || (p.Status == "To Do")) && (p.Created.AddDays(14) <= System.DateTime.Now))
+                {
+                    <tr>
+                        <td><a href="@(p.KeyLink)">@p.Key</a></td>
+                        <td>@p.Summary</td>
+                        <td>@p.Status</td>
+                        <td>@p.Created</td>
+                    </tr>
+                }
+            }
+        </table>
+    </details>
+
+    <details>
+        <summary>
+            <table cellpadding="2" cellspacing="2" border="1" style="background-color:aliceblue">
+                <tr>
+                    <td>Rejected Tickets</td>
+                </tr>
+                <tr>
+                    <td>@ViewBag.RejectedCount</td>
+                </tr>
+            </table>
+        </summary>
+        <table cellpadding="2" cellspacing="2" border="1" style="background-color:white">
+            <tr>
+                <td>Key</td>
+                <td>Summary</td>
+                <td>Status</td>
+            </tr>
+            @foreach (var p in ViewBag.ListData)
+            {
+                if (p.Status == "Rejected")
+                {
+                    <tr>
+                        <td><a href="@(p.KeyLink)">@p.Key</a></td>
+                        <td>@p.Summary</td>
+                        <td>@p.Status</td>
+                    </tr>
+                }
+            }
+        </table>
+    </details>
+
+</body>
+</html>

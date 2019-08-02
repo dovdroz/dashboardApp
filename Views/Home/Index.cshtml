@@ -1,0 +1,47 @@
+﻿
+    
+@{
+    ViewBag.Title = "Home";
+}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<Page Language="C#" Inherits="System.Web.Mvc.ViewPage<Loginform.Models.sonal>">
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    <head runat="server">
+        <title>EST Team Production Dashboard</title>
+    </head>
+    <body style="background-color:#add8e6;">
+        <div>
+            <h2>EST Team Production Dashboard</h2>
+            <!-- @using (Html.BeginForm())
+            {
+
+            }
+                -->
+            <!--            <div>
+                    @Html.ActionLink("Clear Filter", "Index")
+                </div>
+    -->
+            <br />
+            @using (Html.BeginForm("Import", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.Raw(ViewBag.Error)
+                @Html.ValidationSummary(true)
+                <fieldset>
+                    <legend>Filter</legend>
+                    <label for="startDate">Start Date:</label>
+                    <input type="date" id="startDate" placeholder="Enter Start Date" name="startDate" onclick="filterSelection('startDate')" />
+                    <label for="endDate">End Date:</label>
+                    <input type="date" id="endDate" placeholder="Enter End Date" name="endDate" onclick="filterSelection('endDate')" />
+                </fieldset>
+                <br />
+                <span><mark>Please choose most recent JIRA SPEG Excel File</mark></span><input type="file" name="excelfile" />
+                <br />
+                <input type="submit" value="Import" />
+            }
+        </div>
+    </body>
+</html>
+
+
+</Page>
